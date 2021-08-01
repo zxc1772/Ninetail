@@ -7,6 +7,7 @@ using UnityEngine;
 using HarmonyLib;
 using RimWorld;
 using Verse;
+using System.Data.OleDb;
 
 namespace Ninetail
 {
@@ -39,37 +40,50 @@ namespace Ninetail
 		}
 	}
 
-	[HarmonyPatch(typeof(Ideo), "IsVeneratedAnimal",
-				  new Type[] { typeof(ThingDef).MakeByRefType() })]
+
+	[HarmonyPatch(typeof(Ideo), "IsVeneratedAnimal", argumentTypes: new Type[] { typeof(ThingDef) })]
 	class IsVeneratedAnimal_Patch_Class
 	{
-		public static bool Prefix(ThingDef thingDef, Ideo __instance, ref bool __result)
-		{
-			var precepts = Traverse.Create(__instance).Field("precepts = new List<Precept>()").GetValue() as List<Precept>;
-			if (!ModsConfig.IdeologyActive)
-			{
-				__result = false;
-				return false;
-			}
-			if (thingDef == null || !thingDef.race.Animal)
-			{
-				__result = false;
-				return false;
-			}
-			using (List<Precept>.Enumerator enumerator = precepts.GetEnumerator())
-			{
-				while (enumerator.MoveNext())
-				{
-					Precept_Animal precept_Animal;
-					if ((precept_Animal = (enumerator.Current as Precept_Animal)) != null && thingDef == precept_Animal.ThingDef)
-					{
-						__result = true;
-						return false;
-					}
-				}
-			}
-			__result = false;
-			return false;
-		}
+		public static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions)
+        {
+			var insts = new List<CodeInstruction>(instructions);
+			var ret = new List<CodeInstruction>();
+			var opInequalityMethod = AccessTools.Method(typeof(Type), "op_Inequality");
+			var getTypeFromHandleMethod = AccessTools.Method(typeof(Type), "GetTypeFromHandle");
+			var thingClassFieldInfo = AccessTools.Field(typeof(ThingDef), "thingClass");
+
+			int i = 0;
+
+			for (; i < insts.Count; i++)
+            {
+				var oldCode = insts.ElementAt(i);
+
+				// keep continuing until target IL code appears
+				var matched = oldCode.opcode == OpCodes.Brtrue_S && insts[i - 1].opcode == OpCodes.Call && insts[i + 1].opcode == OpCodes.Ldarg_1;
+				if (!matched)
+                {
+					ret.Add(oldCode);
+					continue;
+                }
+
+				// inject "&& thingDef.thingClass != typeof(Ninetail.AMP_SpecialBody)"
+				ret.Add(new CodeInstruction(OpCodes.Ldarg_1));
+				ret.Add(new CodeInstruction(OpCodes.Ldfld, operand: thingClassFieldInfo));
+				ret.Add(new CodeInstruction(OpCodes.Ldtoken, operand: typeof(Ninetail.AMP_SpecialBody)));
+				ret.Add(new CodeInstruction(OpCodes.Call, operand: getTypeFromHandleMethod));
+				ret.Add(new CodeInstruction(OpCodes.Call, operand: opInequalityMethod));
+				ret.Add(new CodeInstruction(OpCodes.And));
+				ret.Add(oldCode); // brtrue.s -> return false
+            }
+
+			// copy rest code
+			for (; i < insts.Count; i++)
+            {
+				var oldCode = insts.ElementAt(i);
+				ret.Add(oldCode);
+            }
+
+			return ret;
+        }
 	}
 }
