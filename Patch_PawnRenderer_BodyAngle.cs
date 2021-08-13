@@ -40,6 +40,49 @@ namespace Ninetail
 		}
 	}
 
+	[HarmonyPatch(typeof(ThoughtWorker_BondedAnimalMaster), "GetAnimals", new Type[]{	typeof(Pawn), typeof(List<string>) })]
+	internal class Harmony_GetAnimals
+	{
+		[HarmonyPrefix]
+		private static bool Prefix(Pawn p, List<string> outAnimals)
+		{
+			outAnimals.Clear();
+			return p.RaceProps.Humanlike;
+		}
+	}
+
+	[HarmonyPatch(typeof(ThoughtWorker_ApparelDamaged), "CurrentStateInternal", new Type[] { typeof(Pawn)})]
+	internal class Harmony_ThoughtWorker_ApparelDamaged
+	{
+		[HarmonyPrefix]
+		private static bool Prefix(Pawn p, ref ThoughtState __result)
+		{
+			__result = ThoughtState.Inactive;
+			return p.RaceProps.Humanlike;
+		}
+	}
+
+	[HarmonyPatch(typeof(ThoughtWorker_WrongApparelGender), "CurrentStateInternal", new Type[] { typeof(Pawn) })]
+	internal class Harmony_ThoughtWorker_WrongApparelGender
+	{
+		[HarmonyPrefix]
+		private static bool Prefix(Pawn p, ref ThoughtState __result)
+		{
+			__result = ThoughtState.Inactive;
+			return p.RaceProps.Humanlike;
+		}
+	}
+
+	[HarmonyPatch(typeof(ThoughtWorker_DeadMansApparel), "CurrentStateInternal", new Type[] { typeof(Pawn) })]
+	internal class Harmony_ThoughtWorker_DeadMansApparel
+	{
+		[HarmonyPrefix]
+		private static bool Prefix(Pawn p, ref ThoughtState __result)
+		{
+			__result= ThoughtState.Inactive;
+			return p.RaceProps.Humanlike;
+		}
+	}
 
 	[HarmonyPatch(typeof(Ideo), "IsVeneratedAnimal", argumentTypes: new Type[] { typeof(ThingDef) })]
 	class IsVeneratedAnimal_Patch_Class
@@ -53,7 +96,6 @@ namespace Ninetail
 			var thingClassFieldInfo = AccessTools.Field(typeof(ThingDef), "thingClass");
 
 			int i = 0;
-
 			for (; i < insts.Count; i++)
             {
 				var oldCode = insts.ElementAt(i);
