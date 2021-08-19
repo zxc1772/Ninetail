@@ -5,8 +5,11 @@ using System.Reflection;
 using System.Reflection.Emit;
 using UnityEngine;
 using HarmonyLib;
+using RimWorld.Planet;
 using RimWorld;
 using Verse;
+using Verse.AI;
+using Verse.AI.Group;
 using System.Data.OleDb;
 
 namespace Ninetail
@@ -81,6 +84,268 @@ namespace Ninetail
 		{
 			__result= ThoughtState.Inactive;
 			return p.RaceProps.Humanlike;
+		}
+	}
+
+	[HarmonyPatch(typeof(ThoughtWorker_VeneratedAnimalOnMapOrCaravan), "ShouldHaveThought", new Type[] { typeof(Pawn) })]
+	internal class Harmony_ThoughtWorker_VeneratedAnimalOnMapOrCaravan
+	{
+		[HarmonyPrefix]
+		private static bool Prefix(Pawn p, ref ThoughtState __result)
+		{
+			__result = ThoughtState.Inactive;
+			return p.RaceProps.Humanlike;
+		}
+	}
+
+	[HarmonyPatch(typeof(ThoughtWorker_Precept_Blind), "ShouldHaveThought", new Type[] { typeof(Pawn) })]
+	internal class Harmony_ThoughtWorker_Precept_Blind
+	{
+		[HarmonyPrefix]
+		private static bool Prefix(Pawn p, ref ThoughtState __result)
+		{
+			__result = ThoughtState.Inactive;
+			return p.RaceProps.Humanlike;
+		}
+	}
+
+	[HarmonyPatch(typeof(ThoughtWorker_Precept_HalfBlind), "ShouldHaveThought", new Type[] { typeof(Pawn) })]
+	internal class Harmony_ThoughtWorker_Precept_HalfBlind
+	{
+		[HarmonyPrefix]
+		private static bool Prefix(Pawn p, ref ThoughtState __result)
+		{
+			__result = ThoughtState.Inactive;
+			return p.RaceProps.Humanlike;
+		}
+	}
+
+	[HarmonyPatch(typeof(ThoughtWorker_Precept_NonBlind), "ShouldHaveThought", new Type[] { typeof(Pawn) })]
+	internal class Harmony_ThoughtWorker_Precept_NonBlind
+	{
+		[HarmonyPrefix]
+		private static bool Prefix(Pawn p, ref ThoughtState __result)
+		{
+			__result = ThoughtState.Inactive;
+			return p.RaceProps.Humanlike;
+		}
+	}
+
+	[HarmonyPatch(typeof(ThoughtWorker_Precept_GroinOrChestUncovered), "ShouldHaveThought", new Type[] { typeof(Pawn) })]
+	internal class Harmony_ThoughtWorker_Precept_GroinOrChestUncovered
+	{
+		[HarmonyPrefix]
+		private static bool Prefix(Pawn p, ref ThoughtState __result)
+		{
+			__result = ThoughtState.Inactive;
+			return p.RaceProps.Humanlike;
+		}
+	}
+
+	[HarmonyPatch(typeof(ThoughtWorker_Precept_GroinUncovered), "ShouldHaveThought", new Type[] { typeof(Pawn) })]
+	internal class Harmony_ThoughtWorker_Precept_GroinUncovered
+	{
+		[HarmonyPrefix]
+		private static bool Prefix(Pawn p, ref ThoughtState __result)
+		{
+			__result = ThoughtState.Inactive;
+			return p.RaceProps.Humanlike;
+		}
+	}
+
+	[HarmonyPatch(typeof(ThoughtWorker_Precept_AnyBodyPartCovered), "ShouldHaveThought", new Type[] { typeof(Pawn) })]
+	internal class Harmony_ThoughtWorker_Precept_AnyBodyPartCovered
+	{
+		[HarmonyPrefix]
+		private static bool Prefix(Pawn p, ref ThoughtState __result)
+		{
+			__result = ThoughtState.Inactive;
+			return p.RaceProps.Humanlike;
+		}
+	}
+
+	[HarmonyPatch(typeof(ThoughtWorker_Precept_AnyBodyPartButGroinCovered), "ShouldHaveThought", new Type[] { typeof(Pawn) })]
+	internal class Harmony_ThoughtWorker_Precept_AnyBodyPartButGroinCovered
+	{
+		[HarmonyPrefix]
+		private static bool Prefix(Pawn p, ref ThoughtState __result)
+		{
+			__result = ThoughtState.Inactive;
+			return p.RaceProps.Humanlike;
+		}
+	}
+
+	[HarmonyPatch(typeof(ThoughtWorker_Precept_GroinChestOrHairUncovered), "ShouldHaveThought", new Type[] { typeof(Pawn) })]
+	internal class Harmony_ThoughtWorker_Precept_GroinChestOrHairUncovered
+	{
+		[HarmonyPrefix]
+		private static bool Prefix(Pawn p, ref ThoughtState __result)
+		{
+			__result = ThoughtState.Inactive;
+			return p.RaceProps.Humanlike;
+		}
+	}
+
+	[HarmonyPatch(typeof(ThoughtWorker_Precept_GroinChestHairOrFaceUncovered), "ShouldHaveThought", new Type[] { typeof(Pawn) })]
+	internal class Harmony_ThoughtWorker_Precept_GroinChestHairOrFaceUncovered
+	{
+		[HarmonyPrefix]
+		private static bool Prefix(Pawn p, ref ThoughtState __result)
+		{
+			__result = ThoughtState.Inactive;
+			return p.RaceProps.Humanlike;
+		}
+	}
+
+	[HarmonyPatch(typeof(ThoughtWorker_Dark), "CurrentStateInternal", new Type[] { typeof(Pawn) })]
+	internal class Harmony_ThoughtWorker_Dark
+	{
+		[HarmonyPrefix]
+		private static bool Prefix(Pawn p, ref ThoughtState __result)
+		{
+			__result = ThoughtState.Inactive;
+			return p.RaceProps.Humanlike;
+		}
+	}
+
+	[HarmonyPatch(typeof(ThoughtWorker_LookChangeDesired), "CurrentStateInternal", new Type[] { typeof(Pawn) })]
+	internal class Harmony_ThoughtWorker_LookChangeDesired
+	{
+		[HarmonyPrefix]
+		private static bool Prefix(Pawn p, ref ThoughtState __result)
+		{
+			__result = ThoughtState.Inactive;
+			return p.RaceProps.Humanlike;
+		}
+	}
+
+	[HarmonyPatch(typeof(Alert_Thought), "GetReport")]
+	internal class Harmony_Alert_Thought
+	{
+		[HarmonyPrefix]
+		private static bool Prefix()
+		{
+			return false;
+		}
+	}
+
+	[HarmonyPatch(typeof(PawnColumnWorker_Slaughter), "HasCheckbox", new Type[] { typeof(Pawn) })]
+	internal class Harmony_PawnColumnWorker_Slaughter
+	{
+		[HarmonyPrefix]
+		private static bool Prefix(Pawn pawn, ref bool __result)
+		{
+			if (pawn.kindDef == PawnKindDefOf.Ninetailfox || pawn.kindDef == PawnKindDefOf.Ninetailfoxwt)
+			{
+				__result = false;
+				return false;
+			}
+			return true;
+		}
+	}
+
+	[HarmonyPatch(typeof(PawnColumnWorker_ReleaseAnimalToWild), "HasCheckbox", new Type[] { typeof(Pawn) })]
+	internal class Harmony_PawnColumnWorker_ReleaseAnimalToWild
+	{
+		[HarmonyPrefix]
+		private static bool Prefix(Pawn pawn, ref bool __result)
+		{
+			if (pawn.kindDef == PawnKindDefOf.Ninetailfox || pawn.kindDef == PawnKindDefOf.Ninetailfoxwt)
+			{
+				__result = false;
+				return false;
+			}
+			return true;
+		}
+	}
+
+	[HarmonyPatch(typeof(Designator_ReleaseAnimalToWild), "CanDesignateThing", new Type[] { typeof(Thing) })]
+	internal class Harmony_Designator_ReleaseAnimalToWild
+	{
+		[HarmonyPrefix]
+		private static bool Prefix(Thing t)
+		{
+			Pawn pawn = t as Pawn;
+			if (pawn == null)
+			{
+				return true;
+			}
+			if (pawn.kindDef == PawnKindDefOf.Ninetailfox || pawn.kindDef == PawnKindDefOf.Ninetailfoxwt)
+			{
+				return false;
+			}
+			return true;
+		}
+	}
+
+	[HarmonyPatch(typeof(Designator_Slaughter), "CanDesignateThing", new Type[] { typeof(Thing) })]
+	internal class Harmony_Designator_Slaughter
+	{
+		[HarmonyPrefix]
+		private static bool Prefix(Thing t)
+		{
+			Pawn pawn = t as Pawn;
+			if (pawn == null)
+			{
+				return true;
+			}
+			if (pawn.kindDef == PawnKindDefOf.Ninetailfox || pawn.kindDef == PawnKindDefOf.Ninetailfoxwt)
+			{
+				return false;
+			}
+			return true;
+		}
+	}
+
+	[HarmonyPatch(typeof(Pawn), "get_IsColonistPlayerControlled")]
+	public class Pawn_get_IsColonistPlayerControlled
+	{
+		[HarmonyPrefix]
+		public static bool Prefix(Pawn __instance, ref bool __result)
+		{
+			if (__instance.kindDef == PawnKindDefOf.Ninetailfox || __instance.kindDef == PawnKindDefOf.Ninetailfoxwt)
+			{
+				if (__instance.Faction == Faction.OfPlayer && !__instance.Dead && __instance.MentalStateDef == null)
+				{
+					__result = true;
+					return false;
+				}
+			}
+			return true;
+		}
+	}
+
+	[HarmonyPatch(typeof(Pawn), "get_IsColonist")]
+	public class Pawn_IsColonist
+	{
+		[HarmonyPrefix]
+		public static bool Prefix(Pawn __instance, ref bool __result)
+		{
+			if (__instance.kindDef == PawnKindDefOf.Ninetailfox || __instance.kindDef == PawnKindDefOf.Ninetailfoxwt)
+			{
+				if (__instance.Faction == Faction.OfPlayer && !__instance.Dead)
+				{
+					__result = true;
+					return false;
+				}
+			}
+			return true;
+		}
+	}
+
+	[HarmonyPatch(typeof(Pawn_StyleTracker), "StyleTrackerTick")]
+	public class Pawn_StyleTrackerTick
+	{
+		[HarmonyPrefix]
+		public static bool Prefix(Pawn_StyleTracker __instance)
+		{
+			var p = Traverse.Create(__instance).Field("pawn").GetValue() as Pawn;
+			if (p.RaceProps.Animal)
+			{
+				Rand.MTBEventOccurs(20f, 60000f, 2500f);
+				return false;
+			}
+			return true;
 		}
 	}
 

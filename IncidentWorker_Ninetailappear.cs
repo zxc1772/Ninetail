@@ -1,20 +1,16 @@
-﻿using UnityEngine;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using RimWorld;
 using Verse;
 using Verse.Sound;
-using RimWorld;
 
 
 namespace Ninetail
 {
     public class IncidentWorker_Ninetailappear : IncidentWorker
     {
-        protected override bool CanFireNowSub(IncidentParms parms)
-        {
-            Map map = (Map)parms.target;
-            return (!map.gameConditionManager.ConditionIsActive(GameConditionDefOf.ToxicFallout));
-        }
-
-    protected override bool TryExecuteWorker(IncidentParms parms)
+        protected override bool TryExecuteWorker(IncidentParms parms)
         {
             Map map = (Map)parms.target;
             IntVec3 intVec;
@@ -23,6 +19,12 @@ namespace Ninetail
                 return false;
             }
             PawnKindDef Ninetail = PawnKindDefOf.Ninetailfox;
+            List<Pawn> list = Enumerable.ToList<Pawn>(Enumerable.Where<Pawn>(map.mapPawns.AllPawnsSpawned, (Pawn col) => col.kindDef == Ninetail));
+            bool flag = list.Count >= 1;
+            if (flag)
+            {
+                return false;
+            }
             IntVec3 invalid = IntVec3.Invalid;
             if (!RCellFinder.TryFindRandomCellOutsideColonyNearTheCenterOfTheMap(intVec, map, 10f, out invalid))
             {

@@ -9,16 +9,13 @@ namespace Ninetail
     {
         protected override ThoughtState CurrentStateInternal(Verse.Pawn p)
         {
-            if (!p.Spawned)
-            {
-                return false;
-            }
-            if (p.Faction != Faction.OfPlayer)
+            if (!p.Spawned || p.IsPrisoner || p.Faction != Faction.OfPlayer)
             {
                 return false;
             }
             if (p.kindDef == PawnKindDefOf.Ninetailfox || p.kindDef == PawnKindDefOf.Ninetailfoxwt)
             {
+                p.psychicEntropy?.OffsetPsyfocusDirectly(0.001f);
                 return false;
             }
             bool flag4 = false;

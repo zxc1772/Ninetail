@@ -29,5 +29,7 @@ namespace Ninetail
 		public static NeedDef Beauty;
 
 		public static NeedDef Comfort;
+
+		public static NeedDef Outdoors;
 	}
 }

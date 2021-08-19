@@ -40,4 +40,15 @@ namespace Ninetail
             __result = true;
         }
     }
+
+    [HarmonyPatch(typeof(Pawn_NeedsTracker), "ShouldHaveNeed", new System.Type[] { typeof(NeedDef) })]
+    internal class Patch_Pawn_NeedsTrackerPostfix4
+    {
+        private static void Postfix(NeedDef nd, Pawn_NeedsTracker __instance, ref bool __result)
+        {
+            if (!(nd == Ninetail.NeedDefOf.Outdoors & ((Thing)Traverse.Create((object)__instance).Field("pawn").GetValue<Pawn>()).def.thingClass == typeof(Ninetail.AMP_SpecialBody)))
+                return;
+            __result = true;
+        }
+    }
 }
