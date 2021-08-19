@@ -315,24 +315,6 @@ namespace Ninetail
 		}
 	}
 
-	[HarmonyPatch(typeof(Pawn), "get_IsColonist")]
-	public class Pawn_IsColonist
-	{
-		[HarmonyPrefix]
-		public static bool Prefix(Pawn __instance, ref bool __result)
-		{
-			if (__instance.kindDef == PawnKindDefOf.Ninetailfox || __instance.kindDef == PawnKindDefOf.Ninetailfoxwt)
-			{
-				if (__instance.Faction == Faction.OfPlayer && !__instance.Dead)
-				{
-					__result = true;
-					return false;
-				}
-			}
-			return true;
-		}
-	}
-
 	[HarmonyPatch(typeof(Pawn_StyleTracker), "StyleTrackerTick")]
 	public class Pawn_StyleTrackerTick
 	{
