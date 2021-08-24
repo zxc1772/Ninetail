@@ -316,7 +316,7 @@ namespace Ninetail
 	}
 
 	[HarmonyPatch(typeof(Pawn_StyleTracker), "StyleTrackerTick")]
-	public class Pawn_StyleTrackerTick
+	public class Harmony_Pawn_StyleTrackerTick
 	{
 		[HarmonyPrefix]
 		public static bool Prefix(Pawn_StyleTracker __instance)
@@ -325,6 +325,27 @@ namespace Ninetail
 			if (p.RaceProps.Animal)
 			{
 				Rand.MTBEventOccurs(20f, 60000f, 2500f);
+				return false;
+			}
+			return true;
+		}
+	}
+
+	[HarmonyPatch(typeof(WorkGiver_Train), "JobOnThing", new Type[]
+	{
+		typeof(Pawn),
+		typeof(Thing),
+		typeof(bool)
+	})]
+	internal class Patch_WorkGiver_Train_Postfix
+	{
+		// Token: 0x06000145 RID: 325 RVA: 0x0000AED8 File Offset: 0x000090D8
+		private static bool Prefix(Pawn pawn, Thing t, ref Job __result)
+		{
+			Pawn pawn2 = t as Pawn;
+			if (pawn == pawn2)
+			{
+				__result = null;
 				return false;
 			}
 			return true;

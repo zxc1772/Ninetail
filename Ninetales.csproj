@@ -73,6 +73,7 @@
     <Compile Include="Main.cs" />
     <Compile Include="MiscDefOf.cs" />
     <Compile Include="NeedDefOf.cs" />
+    <Compile Include="Patch_BestFoodSourceOnMap_PrefixTranspiler.cs" />
     <Compile Include="Patch_PawnRenderer_BodyAngle.cs" />
     <Compile Include="Pawn_NeedsTracker.cs" />
     <Compile Include="St.cs" />
