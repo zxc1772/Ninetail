@@ -23,24 +23,9 @@ namespace Ninetail
             {
                 if (current.kindDef == PawnKindDefOf.Ninetailfox || current.kindDef == PawnKindDefOf.Ninetailfoxwt)
                 {
-                    Verse.Pawn pawn = p;
-                    Verse.Pawn firstDirectRelationPawn = pawn.relations.GetFirstDirectRelationPawn(PawnRelationDefOf.Bond, (Verse.Pawn req) => req.Spawned);
-                    bool flag = pawn != null && pawn.Faction != null && pawn.Faction.IsPlayer && pawn.RaceProps.Humanlike && !pawn.RaceProps.Animal;
-                    if (flag)
-                    {
-                        bool flag2 = firstDirectRelationPawn != null;
-                        if (flag2)
-                        {
-                            bool flag3 = firstDirectRelationPawn.def == MiscDefOf.Ninetailfox || firstDirectRelationPawn.def == MiscDefOf.Ninetailfoxwt;
-                            if (flag3)
-                            {
-                                pawn.health.AddHediff(HediffDef.Named("KyulenBlessing"));
-                            }
-                        }
-                    }
                     if (current.Faction != null && current.Faction.ideos != null && current.Faction.ideos.PrimaryIdeo != null)
                     {
-                        current.ideo.SetIdeo(pawn.Faction.ideos.PrimaryIdeo);
+                        current.ideo.SetIdeo(p.Faction.ideos.PrimaryIdeo);
                     }
                     flag4 = true;
                 }

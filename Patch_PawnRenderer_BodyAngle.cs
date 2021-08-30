@@ -337,9 +337,8 @@ namespace Ninetail
 		typeof(Thing),
 		typeof(bool)
 	})]
-	internal class Patch_WorkGiver_Train_Postfix
+	internal class Patch_WorkGiver_Train_Prefix
 	{
-		// Token: 0x06000145 RID: 325 RVA: 0x0000AED8 File Offset: 0x000090D8
 		private static bool Prefix(Pawn pawn, Thing t, ref Job __result)
 		{
 			Pawn pawn2 = t as Pawn;

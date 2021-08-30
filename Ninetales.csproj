@@ -73,8 +73,9 @@
     <Compile Include="Main.cs" />
     <Compile Include="MiscDefOf.cs" />
     <Compile Include="NeedDefOf.cs" />
-    <Compile Include="Patch_BestFoodSourceOnMap_PrefixTranspiler.cs" />
+    <Compile Include="Patch_BestFoodSourceOnMap_Prefix.cs" />
     <Compile Include="Patch_PawnRenderer_BodyAngle.cs" />
+    <Compile Include="Patch_TryDevelopBondRelation.cs" />
     <Compile Include="Pawn_NeedsTracker.cs" />
     <Compile Include="St.cs" />
     <Compile Include="ThingDef_AnimalMultiPostures.cs" />
