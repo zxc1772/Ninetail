@@ -395,4 +395,38 @@ namespace Ninetail
 			return ret;
         }
 	}
+	/*
+	[HarmonyPatch(typeof(FloatMenuMakerMap), "ChoicesAtFor")]
+	class FloatMenuMakerMap_Patch_Class
+    {
+		public static bool predicate(Pawn pawn)
+        {
+			return pawn.RaceProps.Humanlike || pawn.kindDef == PawnKindDefOf.Ninetailfox || pawn.kindDef == PawnKindDefOf.Ninetailfoxwt;
+        }
+
+		public static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions)
+		{
+			var get_HumanLike = AccessTools.PropertyGetter(typeof(RaceProperties), "HumanLike");
+			var predicate = AccessTools.Method(typeof(FloatMenuMakerMap_Patch_Class), "predicate");
+
+			var insts = new List<CodeInstruction>(instructions);
+			var ret = new List<CodeInstruction>();
+
+
+			int patchEntryPosition = insts.FindIndex((op) => op.Calls(get_HumanLike)) - 2;
+
+			ret.AddRange(ret.Take(patchEntryPosition + 1));
+			ret.Add(new CodeInstruction(OpCodes.Ldarg_1));
+			ret.Add(new CodeInstruction(OpCodes.Call, predicate));
+			ret.AddRange(insts.Skip(patchEntryPosition + 2));
+
+			foreach(var inst in ret)
+            {
+				Log.Message($"opcode: {inst.opcode}\toperand: {inst.operand}");
+            }
+
+			return ret;
+		}
+	}
+	*/
 }
